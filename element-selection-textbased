@@ -1,5 +1,3 @@
-// HULPMIDDELWERELD EXPERIMENT
-
 myUrl = window.location.href;
 
 function getElementsByTextContent(text) {
