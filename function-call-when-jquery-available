@@ -58,10 +58,10 @@
       .addClass("new-usps")
       .appendTo($(".product-page .usps-wrapper").eq(0));
     $(".new-usps li:nth-child(1)").hide();
-    $(".new-usps li:nth-child(3)").hide(); // Hide thuiswinkel
+    $(".new-usps li:nth-child(3)").hide();
 
     $(".new-usps").append(
-      '<li><a href="#" rel="follow" target="_self"><span class="icon-usp"><span></span></span><span> Klanten beoordelen ons met een 9.3</span></a></li><li><a href="tel:+31499440222" rel="follow" target="_self"><span class="icon-usp"><span></span></span><span> Vragen? Bel: +31(0)499-440222</span></a></li>'
+      '<li><a href="#" rel="follow" target="_self"><span class="icon-usp"><span></span></span><span> Klanten beoordelen ons met een 9.3</span></a></li><li><a href="tel:TEL" rel="follow" target="_self"><span class="icon-usp"><span></span></span><span> Vragen? Bel: TEL</span></a></li>'
     );
   }
 
