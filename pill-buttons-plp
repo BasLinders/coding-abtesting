@@ -30,7 +30,7 @@
 
       function loadEvoSlider() {
           var myUrl = window.location.href;
-          if (myUrl == "https://www.afzuigkapfilterwinkel.nl/afzuigkapfilters") {
+          if (myUrl == "URL") {
               console.log("myUrl: " + myUrl);
               //console.log(Slick);
               $('.evo-accu-machines').appendTo('.category-content.category-view');
@@ -73,7 +73,7 @@
               });
 
           }
-          if (myUrl == "https://www.toolnation.nl/machine.html") {
+          if (myUrl == "URL2") {
 
               $('.evo-machines').appendTo('.category-content.category-view');
               $('.evo-accu-machines').hide();
