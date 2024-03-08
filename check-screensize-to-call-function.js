@@ -17,3 +17,21 @@ jQuery(document).ready(function() {
 
     checkScreenSize();
 });
+
+// If used in conjunction with a checkAndExecute function:
+
+    let intervalId; // Declaring it outside of all functions to be globally accessible
+    
+    function checkScreenSize() {
+        let newWindowWidth = jQuery(window).width();
+        if (newWindowWidth > 992) {
+            if (!intervalId) { // Only set the interval if it's not already set
+                intervalId = setInterval(checkAndExecute, 500);
+            }
+        } else {
+            if (intervalId) {
+                clearInterval(intervalId); // Clear the interval if the screen is smaller
+                intervalId = null; // Reset the intervalId
+            }
+        }
+    }
