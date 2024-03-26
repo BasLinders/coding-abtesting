@@ -9,7 +9,7 @@
     }
 
     if (!delayTimeout) {
-      delayInterval = 15000;
+      delayTimeout = 15000;
     }
 
     var interval = setInterval(function () {
