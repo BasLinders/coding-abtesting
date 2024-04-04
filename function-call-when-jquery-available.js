@@ -3,25 +3,18 @@
 
   /** LIBRARY FUNCTIONS */
   // Function to wait for jQuery to load
-  function waitForjQuery(trigger, delayInterval, delayTimeout) {
-    if (!delayInterval) {
-      delayInterval = 50;
-    }
-
-    if (!delayTimeout) {
-      delayTimeout = 15000;
-    }
-
-    var interval = setInterval(function () {
-      if (typeof window.jQuery != "undefined") {
-        clearInterval(interval);
-        trigger(window.jQuery);
-      }
+function waitForjQuery(trigger, delayInterval = 50, delayTimeout = 15000) {
+    let interval = setInterval(function () {
+        if (typeof window.jQuery != "undefined") {
+            clearInterval(interval);
+            trigger(window.jQuery);
+        }
     }, delayInterval);
+
     setTimeout(function () {
-      clearInterval(interval);
+        clearInterval(interval);
     }, delayTimeout);
-  }
+}
 
   // Function to wait for an element to be available in the DOM
   function waitForElement(selector, trigger, delayInterval, delayTimeout) {
