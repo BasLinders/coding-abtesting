@@ -1,5 +1,5 @@
 (function () {
-  var $;
+  let $;
 
   /** LIBRARY FUNCTIONS */
   // Function to wait for jQuery to load
@@ -60,7 +60,7 @@ function waitForjQuery(trigger, delayInterval = 50, delayTimeout = 15000) {
 
   // Wait for jquery
   waitForjQuery(function (jQuery) {
-    $ = jQuery;
+    let $ = jQuery;
     // Wait for element
     waitForElement(".page-header .contentmanager-usps", function () {
       changeUspBlock();
