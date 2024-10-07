@@ -1,3 +1,13 @@
+// Custom DOM ready function for vanilla Javascript
+function domReady() {
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        fn();
+    } else {
+        document.addEventListener("DOMContentLoaded", fn);
+    }
+}
+
+
 // Mutation Observer jQuery quickstart
 const observer = new MutationObserver(function(mutationsList) {
     for (let mutation of mutationsList) {
@@ -18,14 +28,13 @@ const observer = new MutationObserver(function (mutationsList) {
     let foundNode = false;
     for (let mutation of mutationsList) {
         // Handle 'childList' changes (if elements are added)
-        /*
         if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
             mutation.addedNodes.forEach(node => {
                 // Only process element nodes (skip text/comment nodes)
-                if (node.nodeType === 1 && node.classList.contains('step1') && node.classList.contains('active')) {
+                if (node.nodeType === 1 && node.classList.contains('...') && node.classList.contains('...')) {
                     foundNode = true;
-                    const firstPackage = document.querySelector('[data-label="Gewoon ZEKUR"]')?.closest('.col.s12.m12.xl4');
-                    if (firstPackage) {
+                    const firstElement = document.querySelector('[data-label="..."]');
+                    if (firstElement) {
                         domReady(() => {
                             moveProductCards(); // Perform your actions
                         });
@@ -33,15 +42,14 @@ const observer = new MutationObserver(function (mutationsList) {
                 }
             });
         }
-        */
         
         // Handle 'attributes' changes
         if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
             const node = mutation.target;
             if (node.classList.contains('step1') && node.classList.contains('active')) {
                 foundNode = true;
-                const firstPackage = document.querySelector('[data-label="Gewoon ZEKUR"]')?.closest('.col.s12.m12.xl4');
-                if (firstPackage) {
+                const firstElement = document.querySelector('[data-label="..."]');
+                if (firstElement) {
                     domReady(() => {
                         moveProductCards(); // Perform your actions
                     });
