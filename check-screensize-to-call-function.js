@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
     let intervalId; // Declaring it outside of all functions to be globally accessible
     
     function checkScreenSize() {
-        let newWindowWidth = jQuery(window).width();
+        let newWindowWidth = jQuery(window).width(); // or window.innerWidth;
         if (newWindowWidth > 992) {
             if (!intervalId) { // Only set the interval if it's not already set
                 intervalId = setInterval(checkAndExecute, 500);
