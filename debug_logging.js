@@ -1,11 +1,13 @@
 /* --------------------- DEBUGGING ------------------------------*/
 const debug = {
-    introStyle: "color: #fff; font-size: 14px; background: red; padding: 2px 5px; border-radius: 3px;", // Stijl voor msg_intro
-    msgStyle: "color: #ccc; font-size: 12px; background: none; padding: 2px 5px;", // Style voor msg
-    messageStyle: "color: #fff; font-weight: bold;", // Basisstijl voor de inhoud van het bericht
-    msg_intro: "DEBUGGING",
-    msg: "experiment_id",
-    isEnabled: true // of 'false' als de logs uit moeten worden geschakeld, voor de livegang van de test
+    isEnabled: true,
+    msg_intro: "AB-TESTING",
+    msg: "shorten_price",
+    styles: {
+        intro: "color: #fff; background: #0077b6; padding: 2px 5px; border-radius: 3px; font-weight: bold;",
+        tag: "color: #000; background: #caf0f8; padding: 2px 5px; font-weight: bold;",
+        text: "color: #03045e;"
+    }
 };
 
 function logDebugMessage(...args) {
