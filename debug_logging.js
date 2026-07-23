@@ -14,9 +14,3 @@ function log(msg, ...args) {
             debug.styles.intro, debug.styles.tag, debug.styles.text, ...args);
     }
 }
-
-// Voorbeelden om te loggen (verschillende stijlen)
-logDebugMessage("Starting experiment."); // Standaardbericht
-logDebugMessage("Error: Couldn't execute change.", "color: red;"); // Foutmelding
-logDebugMessage("Warning: Change executed twice.", "color: orange;"); // Waarschuwing
-logDebugMessage("Success: Change executed!", "color: green; font-style: italic;"); // Succes
