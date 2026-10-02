@@ -34,7 +34,7 @@ function magentoRequire(modules, callback, { timeout = 10000 } = {}) {
 
 // Usage: format a price the same way Magento does
 magentoRequire(['Magento_Catalog/js/price-utils'], (priceUtils) => {
-  const format = window.checkoutConfig && window.checkoutConfig.priceFormat;
+  const format = window.checkoutConfig?.priceFormat;
   if (format) console.log(priceUtils.formatPrice(49.95, format));
 });
 

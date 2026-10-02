@@ -26,7 +26,7 @@ function loadScript(src, { async = true } = {}) {
     script.async = async;
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('loadScript: failed to load ' + src));
-    document.head.appendChild(script);
+    document.head.insertAdjacentElement('beforeend', script);
   });
 }
 

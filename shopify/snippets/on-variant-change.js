@@ -19,7 +19,7 @@ function onVariantChange(callback) {
   const read = () => {
     const fromUrl = new URLSearchParams(window.location.search).get('variant');
     const input = document.querySelector('form[action*="/cart/add"] [name="id"]');
-    return fromUrl || (input && input.value);
+    return fromUrl || input?.value;
   };
   const check = () => {
     // Wait a tick so the theme can update the URL / hidden input first

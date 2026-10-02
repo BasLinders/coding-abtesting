@@ -38,6 +38,6 @@ function findByText(text, { selector = '*', exact = false, root = document } = {
 // Usage: hide the shipping-costs row on the cart page
 if (window.location.pathname === '/cart') {
   const label = findByText('Shipping', { selector: 'th, td, span, div' })[0];
-  const row = label && label.closest('tr, .totals-row');
+  const row = label?.closest('tr, .totals-row');
   if (row) row.classList.add('hh-exp-123-hidden');
 }

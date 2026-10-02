@@ -53,8 +53,8 @@ function onRoute(match, { enter, leave }) {
   let active = false;
   const check = (url) => {
     const matches = test(url);
-    if (matches && !active) { active = true; enter && enter(); }
-    else if (!matches && active) { active = false; leave && leave(); }
+    if (matches && !active) { active = true; enter?.(); }
+    else if (!matches && active) { active = false; leave?.(); }
   };
   check(location.href);
   onUrlChange(check);

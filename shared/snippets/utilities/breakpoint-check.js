@@ -21,7 +21,7 @@
 
 function onBreakpoint(query, { enter, leave }) {
   const mql = window.matchMedia(query);
-  const handle = (e) => (e.matches ? enter && enter() : leave && leave());
+  const handle = (e) => (e.matches ? enter?.() : leave?.());
   handle(mql);
   mql.addEventListener('change', handle);
   return () => mql.removeEventListener('change', handle);

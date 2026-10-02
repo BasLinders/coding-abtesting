@@ -13,7 +13,7 @@
  * PITFALLS
  *   - Return the value you need, not `true`, so you don't have to look it up again.
  *   - Always keep a timeout (see wait-for-element.js).
- *   - Wrap risky property access in the check: () => window.a && window.a.b
+ *   - Wrap risky property access in the check: () => window.a?.b
  *
  * WORKS WITH: all platforms
  */

@@ -18,7 +18,8 @@
  */
 
 window.dataLayer = window.dataLayer || [];
-function gtag() { dataLayer.push(arguments); }
+// gtag needs the real `arguments` object (a ...rest array is ignored by GA), so this one function stays old-style
+function gtag() { window.dataLayer.push(arguments); } // eslint-disable-line prefer-rest-params
 gtag('js', new Date());
 gtag('config', 'G-XXXXXXXXXX', { send_page_view: false });
 gtag('event', 'hh_exp_123_variant_1');

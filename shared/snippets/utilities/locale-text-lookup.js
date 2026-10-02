@@ -9,6 +9,9 @@
  *   Reads the language from <html lang="..."> first (the most reliable source),
  *   then falls back to the first URL path segment (/de/, /fr-be/).
  *
+ * URLS LIKE /gb-en/ OR /de-de/?
+ *   Use the recipe shared/recipes/language-from-pathname instead.
+ *
  * PITFALLS
  *   - Always define a fallback. An unknown language should show sensible copy, not "undefined".
  *   - Check how the site really signals language. Some use subdomains (de.example.com)

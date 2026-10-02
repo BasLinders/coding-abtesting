@@ -2,7 +2,8 @@
 
 <!-- Copy this folder structure for a new recipe:
      <platform>/recipes/<recipe-name>/README.md   ← this file
-     <platform>/recipes/<recipe-name>/variant.js
+     <platform>/recipes/<recipe-name>/variant.js    ← follows the skeleton in _base-context.md: IIFE + 'use strict', CONFIG, debug,
+                                                    modular init() started on readyState, insertAt(), CONFIG.observers
      <platform>/recipes/<recipe-name>/variant.css
      Use "shared/recipes/" when the recipe uses no platform-specific APIs. -->
 

@@ -21,7 +21,7 @@
 
 function delegate(eventType, selector, handler, { capture = true } = {}) {
   const listener = (event) => {
-    const match = event.target.closest && event.target.closest(selector);
+    const match = event.target.closest?.(selector);
     if (match) handler(event, match);
   };
   document.addEventListener(eventType, listener, { capture });

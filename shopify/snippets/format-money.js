@@ -14,8 +14,8 @@
  */
 
 function formatMoney(cents) {
-  const currency = (window.Shopify && window.Shopify.currency && window.Shopify.currency.active) || 'EUR';
-  const locale = (window.Shopify && window.Shopify.locale) || document.documentElement.lang || 'en';
+  const currency = window.Shopify?.currency?.active ?? 'EUR';
+  const locale = window.Shopify?.locale || document.documentElement.lang || 'en';
   return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(cents / 100);
 }
 

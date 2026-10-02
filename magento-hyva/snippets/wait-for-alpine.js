@@ -22,7 +22,7 @@
 function whenAlpineReady({ timeout = 10000 } = {}) {
   return new Promise((resolve, reject) => {
     // Alpine adds an internal `_x_dataStack` property to each component once it is initialised
-    const isReady = () => window.Alpine && document.querySelector('[x-data]') && document.querySelector('[x-data]')._x_dataStack;
+    const isReady = () => window.Alpine && document.querySelector('[x-data]')?._x_dataStack;
     if (isReady()) return resolve(window.Alpine);
 
     const timer = setTimeout(() => reject(new Error('whenAlpineReady: timeout')), timeout);

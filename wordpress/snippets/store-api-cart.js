@@ -24,7 +24,7 @@
  */
 
 function getWooCart() {
-  const root = (window.wcSettings && window.wcSettings.storeApiRoot) || '/wp-json/wc/store/v1/';
+  const root = window.wcSettings?.storeApiRoot || '/wp-json/wc/store/v1/';
   return fetch(root.replace(/\/?$/, '/') + 'cart', { credentials: 'same-origin' })
     .then((res) => {
       if (!res.ok) throw new Error('Store API ' + res.status);

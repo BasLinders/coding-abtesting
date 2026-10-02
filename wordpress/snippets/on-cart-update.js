@@ -30,7 +30,7 @@ function onWooCartUpdate(callback, { delay = 300 } = {}) {
 
   // 1. Block-based cart/checkout: wp.data store (select() can throw for an unregistered store)
   let hasCartStore = false;
-  try { hasCartStore = !!(window.wp && window.wp.data && window.wp.data.select('wc/store/cart')); } catch (e) { /* not a blocks page */ }
+  try { hasCartStore = !!window.wp?.data?.select('wc/store/cart'); } catch (e) { /* not a blocks page */ }
   if (hasCartStore) {
     let last = '';
     window.wp.data.subscribe(() => {

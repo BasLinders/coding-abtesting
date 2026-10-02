@@ -8,6 +8,7 @@ Complete test builds that use only plain JavaScript and the DOM, so they work on
 | `trustpilot-widget`: TrustBox next to any element | ready |
 | `product-card-cta`: CTA button on every product card, multi-language | ready |
 | `pdp-usp-block`: USP list near the add-to-cart button | ready |
+| `language-from-pathname`: copy per language, detected from `/gb-en/`-style URL paths | ready |
 | `cta-copy-change`: change button/CTA text (simplest recipe, good for learning the workflow) | to do |
 | `mobile-sticky-add-to-cart`: sticky bar that clicks the real add-to-cart button | to do |
 | `reorder-pdp-sections`: move sections (e.g. reviews) higher on the product page | to do |

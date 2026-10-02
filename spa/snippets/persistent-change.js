@@ -67,5 +67,5 @@ onRoute(/^\/products\//, {
       }
     );
   },
-  leave: () => stopBadge && stopBadge()
+  leave: () => stopBadge?.()
 });

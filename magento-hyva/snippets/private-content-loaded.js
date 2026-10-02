@@ -28,7 +28,7 @@ function onHyvaSections(callback) {
   // 1. Cached data, if present
   try {
     const cached = JSON.parse(localStorage.getItem('mage-cache-storage') || '{}');
-    if (cached && cached.cart) callback(cached);
+    if (cached?.cart) callback(cached);
   } catch (e) { /* storage unavailable or invalid JSON */ }
 
   // 2. Fresh data now and after every update

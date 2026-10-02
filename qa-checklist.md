@@ -34,7 +34,8 @@ Go through this list for **every** test, in addition to the test-specific steps 
 - [ ] The site's own analytics still work (no extra page views)
 
 ## 6. Housekeeping
-- [ ] Debug logging is off (`isEnabled: false`), or only enabled through `?hh_debug=1`
+- [ ] `CONFIG.debug` is `false` (debug output only through `?hh_debug=1`)
+- [ ] All selectors, copy and insertion positions are in `CONFIG`, with no `[PLACEHOLDERS]` left
 - [ ] Test ID and naming are consistent (`hh-exp-123` in classes, IDs, goals)
 - [ ] Code and CSS are saved in the test documentation / ticket
 - [ ] If you improved the code or found a new pitfall: add it to this repository

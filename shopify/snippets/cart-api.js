@@ -18,7 +18,7 @@
  * WORKS WITH: shopify
  */
 
-const cartRoot = () => (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+const cartRoot = () => window.Shopify?.routes?.root ?? '/';
 
 function getCart() {
   return fetch(cartRoot() + 'cart.js', { credentials: 'same-origin' }).then((r) => r.json());
