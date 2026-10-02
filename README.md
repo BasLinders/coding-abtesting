@@ -1,6 +1,6 @@
 # A/B test problem-solving repository
 
-Building blocks for coding client-side A/B tests with the help of AI. You don't have to be a developer to use it. Describe the change, paste the site's HTML, and an LLM (Claude) writes the JavaScript and CSS for you, based on solutions that have been tested on real client sites.
+Building blocks for coding client-side A/B tests with the help of AI. You don't have to be a developer to use it. Describe the change, paste the site's HTML, and an LLM writes the JavaScript and CSS for you, based on solutions that have been tested on real client sites.
 
 ## How it works
 | | What it is | Example |
