@@ -1,0 +1,31 @@
+/* Hide the blocks the new USP list replaces (only when the variation JS ran) */
+.hh-exp-123 .product-page .usps {
+  display: none;
+}
+
+.hh-exp-123-usps {
+  display: grid;
+  gap: 8px;
+  margin: 16px 0;
+  padding: 0;
+  list-style: none;
+  font-size: 14px;
+}
+
+.hh-exp-123-usps__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Checkmark icon for new items (cloned items keep their own icon) */
+.hh-exp-123-usps__item--new::before {
+  content: "";
+  flex: 0 0 16px;
+  height: 16px;
+  background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='%2328a745' d='M6.2 11.6 2.6 8l1.1-1.1 2.5 2.5 6.1-6.1 1.1 1.1z'/%3E%3C/svg%3E");
+}
+
+.hh-exp-123-usps a {
+  color: inherit;
+}

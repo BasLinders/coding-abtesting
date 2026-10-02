@@ -1,0 +1,86 @@
+.hh-exp-123-pills {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+.hh-exp-123-pills__track {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;               /* Firefox */
+  -webkit-overflow-scrolling: touch;
+}
+
+.hh-exp-123-pills__track::-webkit-scrollbar {
+  display: none;                       /* Chrome, Safari */
+}
+
+.hh-exp-123-pills__track > li {
+  flex: 0 0 auto;
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.hh-exp-123-pills__pill {
+  display: inline-block;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.hh-exp-123-pills__pill:hover,
+.hh-exp-123-pills__pill:focus-visible {
+  border-color: #333;
+  text-decoration: none;
+}
+
+.hh-exp-123-pills__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.hh-exp-123-pills__arrow[hidden] {
+  display: none;
+}
+
+.hh-exp-123-pills__arrow--prev { left: -8px; }
+.hh-exp-123-pills__arrow--next { right: -8px; }
+
+.hh-exp-123-pills__arrow::before {
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  margin: auto;
+  border-top: 2px solid #333;
+  border-right: 2px solid #333;
+}
+
+.hh-exp-123-pills__arrow--prev::before { transform: rotate(-135deg); margin-left: 12px; }
+.hh-exp-123-pills__arrow--next::before { transform: rotate(45deg); margin-left: 9px; }
+
+/* Touch devices swipe; arrows only on devices with a mouse */
+@media (hover: none) {
+  .hh-exp-123-pills__arrow { display: none; }
+}
