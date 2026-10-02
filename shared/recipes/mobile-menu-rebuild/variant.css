@@ -1,0 +1,12 @@
+/* Original menu items that moved into the new menu.
+   !important: the site's menu CSS sets display on these items with higher specificity. */
+.hh-exp-123-hidden {
+  display: none !important;
+}
+
+/* Layer 2 headings: title on the left, caret on the right */
+.hh-exp-123-group-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
