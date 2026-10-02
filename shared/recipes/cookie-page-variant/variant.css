@@ -2,5 +2,5 @@
    Hides the page while it reloads, so visitors don't see the wrong version flash.
    The JS removes the class after CONFIG.reload.hideTimeout as a safety net. */
 .hh-exp-123-reloading body {
-  visibility: hidden;
+    visibility: hidden;
 }

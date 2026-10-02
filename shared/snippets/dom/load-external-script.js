@@ -19,20 +19,20 @@
  */
 
 function loadScript(src, { async = true } = {}) {
-  return new Promise((resolve, reject) => {
-    if (document.querySelector(`script[src="${src}"]`)) return resolve();
-    const script = document.createElement('script');
-    script.src = src;
-    script.async = async;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error('loadScript: failed to load ' + src));
-    document.head.insertAdjacentElement('beforeend', script);
-  });
+    return new Promise((resolve, reject) => {
+        if (document.querySelector(`script[src="${src}"]`)) return resolve();
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = async;
+        script.onload = () => resolve();
+        script.onerror = () => reject(new Error('loadScript: failed to load ' + src));
+        document.head.insertAdjacentElement('beforeend', script);
+    });
 }
 
 // Usage
 loadScript('https://widget.example.com/widget.min.js')
-  .then(() => {
-    // Script is loaded and can be used here
-  })
-  .catch((err) => console.warn(err.message));
+    .then(() => {
+        // Script is loaded and can be used here
+    })
+    .catch((err) => console.warn(err.message));

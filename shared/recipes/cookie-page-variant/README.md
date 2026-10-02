@@ -35,19 +35,6 @@ Pages with a server-side variant: [e.g. all product pages: URLs look like ...]
 Reload on the first page view: [yes / no]
 ```
 
-## Analysis of the original test
-This recipe was extracted from a working two-variant setup. These are the changes and why:
-
-| Original | In this recipe | Why |
-|---|---|---|
-| Control called `deleteCookie()` without defining it | Each variation is self-contained, with the same code and helpers | Unless `deleteCookie` happened to exist globally, the control threw a `ReferenceError` and never removed the cookie |
-| Cookie lifetime: `60` days (advice: test duration − 1 day) | Fixed **end date** (`endDate`) | Days count from **each visitor's** first visit. A visitor who first arrives on the last day kept the new template for ~60 days after the test. An end date expires every cookie at the same moment. |
-| Cookie only set when missing | Re-written on every page view | An outdated value was never corrected, and if the test is extended, existing cookies now get the new end date |
-| First page view in the variant showed the **old** page | Optional one-time reload (`reload`) | The server renders the page **before** the script runs, so it only sees the new cookie on the next request. Visitors who bounce after one page were counted as variant but saw the control. The same happened in reverse after reassignment to the control. |
-| Two separate scripts | One script, `assignment` switch | Cookie name, end date and domain can't drift apart between the variations |
-| No check whether the cookie was really set or removed | Checked and logged | A consent tool, browser setting or wrong `domain` fails without any error |
-| No `Secure` attribute | Added automatically on HTTPS | Best practice for cookies on HTTPS sites |
-
 ## The first page view and the reload
 Without a reload, the first page a new visitor sees is always the current version, even in the variant. Whether that matters depends on the test:
 - **Changed page is usually not the entry page** (e.g. checkout): set `reload.enabled: false`. By the time visitors reach it, the cookie is there.

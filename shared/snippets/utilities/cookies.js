@@ -17,26 +17,26 @@
  */
 
 function setCookie(name, value, days) {
-  let expires = '';
-  if (days) {
-    const date = new Date();
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = '; expires=' + date.toUTCString();
-  }
-  document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
+    let expires = '';
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + date.toUTCString();
+    }
+    document.cookie = `${name}=${encodeURIComponent(value)}${expires}; path=/; SameSite=Lax`;
 }
 
 function getCookie(name) {
-  const match = document.cookie.split('; ').find((c) => c.startsWith(name + '='));
-  return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
+    const match = document.cookie.split('; ').find((c) => c.startsWith(name + '='));
+    return match ? decodeURIComponent(match.slice(name.length + 1)) : null;
 }
 
 function deleteCookie(name) {
-  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
 }
 
 // Usage: store the variant for a preloaded experience, only the first time
 const COOKIE_NAME = 'hh_exp_123_variant';
 if (getCookie(COOKIE_NAME) === null) {
-  setCookie(COOKIE_NAME, 'A', 60);
+    setCookie(COOKIE_NAME, 'A', 60);
 }

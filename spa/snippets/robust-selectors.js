@@ -26,33 +26,33 @@ const byModuleClass = (name) => `[class*="${name}"]`;
 
 // Matches by test attribute, trying the common naming conventions
 const byTestId = (id) => ['data-testid', 'data-test', 'data-test-id', 'data-qa', 'data-cy']
-  .map((attr) => `[${attr}="${id}"]`).join(', ');
+    .map((attr) => `[${attr}="${id}"]`).join(', ');
 
 // Matches the innermost element whose own text equals / contains `text`
 function byText(text, { selector = '*', exact = false, root = document } = {}) {
-  const needle = text.trim().toLowerCase();
-  return Array.from(root.querySelectorAll(selector)).find((el) => {
-    const own = Array.from(el.childNodes).filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').trim().toLowerCase();
-    return exact ? own === needle : own.includes(needle);
-  }) || null;
+    const needle = text.trim().toLowerCase();
+    return Array.from(root.querySelectorAll(selector)).find((el) => {
+        const own = Array.from(el.childNodes).filter((n) => n.nodeType === 3).map((n) => n.textContent).join('').trim().toLowerCase();
+        return exact ? own === needle : own.includes(needle);
+    }) || null;
 }
 
 function findStable(candidates, { root = document } = {}) {
-  for (const candidate of candidates) {
-    let el = null;
-    try {
-      el = typeof candidate === 'function' ? candidate(root) : root.querySelector(candidate);
-    } catch (e) { /* invalid selector, try the next one */ }
-    if (el) return el;
-  }
-  return null;
+    for (const candidate of candidates) {
+        let el = null;
+        try {
+            el = typeof candidate === 'function' ? candidate(root) : root.querySelector(candidate);
+        } catch (e) { /* invalid selector, try the next one */ }
+        if (el) return el;
+    }
+    return null;
 }
 
 // Usage: the add-to-cart button, from most to least stable
 const addToCart = findStable([
-  byTestId('add-to-cart'),                          // 1. test attribute
-  'form[action*="cart"] button[type="submit"]',     // 2. semantic HTML
-  'button[aria-label*="add to cart" i]',            // 3. ARIA
-  byModuleClass('AddToCart_button'),                // 5. stable part of CSS-module class
-  () => byText('Add to cart', { selector: 'button' }) // 6. visible text
+    byTestId('add-to-cart'),                          // 1. test attribute
+    'form[action*="cart"] button[type="submit"]',     // 2. semantic HTML
+    'button[aria-label*="add to cart" i]',            // 3. ARIA
+    byModuleClass('AddToCart_button'),                // 5. stable part of CSS-module class
+    () => byText('Add to cart', { selector: 'button' }) // 6. visible text
 ]);

@@ -1,6 +1,6 @@
 # Recipe: Grid switch on product listing pages
 
-**Works with:** all platforms where the product grid uses CSS grid (originally built for a Magento Hyvä shop with Tweakwise navigation) · **Difficulty:** medium
+**Works with:** all platforms where the product grid uses CSS grid (including Hyvä/Tailwind and AJAX navigation such as Tweakwise) · **Difficulty:** medium
 
 ## Hypothesis example
 > Because product images on mobile category pages are small in the two-column grid, visitors can't judge products without opening them. We expect that letting visitors switch to a one-column view will increase the click-through rate to product pages and the add-to-cart rate.
@@ -35,23 +35,6 @@ Goal for switch clicks: [GOAL_ID or "none"]
 HTML of the toolbar and the start of the product grid:
 [PASTE HTML]
 ```
-
-## Analysis of the original test
-This recipe was extracted from a working test. That test already handled the hard parts well: a delegated click handler, re-inserting after Tweakwise AJAX updates, safe `localStorage` access and a guard against running twice. These are the changes made for the recipe:
-
-| Original | In this recipe | Why |
-|---|---|---|
-| No check for an existing grid switch | `selectors.existingSwitch`: the test does nothing, or switches itself off if the native switch appears later | The recipe's goal: only add a switch where the site has none |
-| CSS injected from JS, with the grid selector and breakpoint inside it ("keep in sync with the media query") | `variant.css` with no site selectors or numbers in it: JS marks the grid with a class and sets an "active" class below `maxWidth` | One place for every value (`CONFIG`), and CSS stays in the CSS field |
-| Fixed CSS rules for 1 and 2 columns | `CONFIG.options` + a CSS custom property (`--hh-exp-123-cols`) | Adding a 3-column option is one line in `CONFIG` |
-| Mobile check only logged once, CSS media query for the rest | `matchMedia` listener | Rotating a tablet or resizing switches the test on/off correctly |
-| Duplicate check via `nextElementSibling` | Map of toolbar → switch, re-inserted when removed | Works for every `position`, and also when the toolbar's content is re-rendered |
-| Convert goal: `_conv_q.push(['triggerConversion', id])` | Documented `{ what: 'triggerConversion', params: { goalId } }`, plus Kameleoon and Varify | Older syntax; check your existing tests. Works with all three tools. |
-| Global `window.__abColSwitch` | `window.__hhExp['hh-exp-123']` | One namespaced global for all tests |
-| Debug `isEnabled: true`, English aria-labels in the markup | `debug: false` + `?hh_debug=1`, labels in `CONFIG` | Team conventions; labels can be translated |
-| Separate warn/error log styles | The standard `log()` | One debug mechanism for every test (rule 3) |
-| Inactive icon `#d1d5db` (1.5:1 contrast on white) | `#6b7280` (4.8:1) + an underline on the active option | The inactive option was barely visible, and the active state relied on colour alone |
-| `localStorage` key `plpMobileCols` | `hh-exp-123-cols` (`settings.storageKey`) | Prefixed with the test ID. **When moving a live test to this recipe, keep the old key**, or returning visitors lose their choice. |
 
 ## Pitfalls
 - **The grid selector.** Point it at the element with `display: grid`, not at a wrapper. If the columns don't change, the debug log says whether the grid was found.

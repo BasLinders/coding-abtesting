@@ -20,15 +20,15 @@
  */
 
 function onBreakpoint(query, { enter, leave }) {
-  const mql = window.matchMedia(query);
-  const handle = (e) => (e.matches ? enter?.() : leave?.());
-  handle(mql);
-  mql.addEventListener('change', handle);
-  return () => mql.removeEventListener('change', handle);
+    const mql = window.matchMedia(query);
+    const handle = (e) => (e.matches ? enter?.() : leave?.());
+    handle(mql);
+    mql.addEventListener('change', handle);
+    return () => mql.removeEventListener('change', handle);
 }
 
 // Usage: sticky add-to-cart only on mobile
 onBreakpoint('(max-width: 767px)', {
-  enter: () => document.documentElement.classList.add('hh-exp-123-mobile'),
-  leave: () => document.documentElement.classList.remove('hh-exp-123-mobile')
+    enter: () => document.documentElement.classList.add('hh-exp-123-mobile'),
+    leave: () => document.documentElement.classList.remove('hh-exp-123-mobile')
 });

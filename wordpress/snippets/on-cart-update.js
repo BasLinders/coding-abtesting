@@ -25,39 +25,39 @@
  */
 
 function onWooCartUpdate(callback, { delay = 300 } = {}) {
-  let t;
-  const fire = () => { clearTimeout(t); t = setTimeout(callback, delay); };
+    let t;
+    const fire = () => { clearTimeout(t); t = setTimeout(callback, delay); };
 
-  // 1. Block-based cart/checkout: wp.data store (select() can throw for an unregistered store)
-  let hasCartStore = false;
-  try { hasCartStore = !!window.wp?.data?.select('wc/store/cart'); } catch (e) { /* not a blocks page */ }
-  if (hasCartStore) {
-    let last = '';
-    window.wp.data.subscribe(() => {
-      const totals = window.wp.data.select('wc/store/cart').getCartTotals();
-      const key = JSON.stringify(totals);
-      if (key !== last) { last = key; fire(); }
-    });
-  }
+    // 1. Block-based cart/checkout: wp.data store (select() can throw for an unregistered store)
+    let hasCartStore = false;
+    try { hasCartStore = !!window.wp?.data?.select('wc/store/cart'); } catch (e) { /* not a blocks page */ }
+    if (hasCartStore) {
+        let last = '';
+        window.wp.data.subscribe(() => {
+            const totals = window.wp.data.select('wc/store/cart').getCartTotals();
+            const key = JSON.stringify(totals);
+            if (key !== last) { last = key; fire(); }
+        });
+    }
 
-  // 2. Classic: containers WooCommerce replaces after a cart update
-  const WATCH = '.widget_shopping_cart_content, .cart_totals, #order_review, .woocommerce-cart-form';
-  const seen = new WeakSet();
-  let initialised = false;
-  new MutationObserver(() => {
-    let changed = false;
-    document.querySelectorAll(WATCH).forEach((el) => {
-      if (!seen.has(el)) { seen.add(el); changed = true; }
-    });
-    // A new container object = WooCommerce replaced it = the cart changed
-    if (changed && initialised) fire();
-  }).observe(document.body, { childList: true, subtree: true });
+    // 2. Classic: containers WooCommerce replaces after a cart update
+    const WATCH = '.widget_shopping_cart_content, .cart_totals, #order_review, .woocommerce-cart-form';
+    const seen = new WeakSet();
+    let initialised = false;
+    new MutationObserver(() => {
+        let changed = false;
+        document.querySelectorAll(WATCH).forEach((el) => {
+            if (!seen.has(el)) { seen.add(el); changed = true; }
+        });
+        // A new container object = WooCommerce replaced it = the cart changed
+        if (changed && initialised) fire();
+    }).observe(document.body, { childList: true, subtree: true });
 
-  document.querySelectorAll(WATCH).forEach((el) => seen.add(el));
-  initialised = true;
+    document.querySelectorAll(WATCH).forEach((el) => seen.add(el));
+    initialised = true;
 }
 
 // Usage (with wordpress/snippets/store-api-cart.js)
 onWooCartUpdate(() => {
-  getWooCart().then((cart) => console.log('Cart updated, subtotal:', cart.subtotal));
+    getWooCart().then((cart) => console.log('Cart updated, subtotal:', cart.subtotal));
 });

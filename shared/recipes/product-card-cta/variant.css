@@ -1,16 +1,16 @@
 .hh-exp-123-cta {
-  display: block;
-  margin-top: 8px;
-  padding: 10px 12px;
-  border-radius: 4px;
-  background: #111;
-  color: #fff;
-  font-weight: 600;
-  text-align: center;
-  text-decoration: none;
+    display: block;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 4px;
+    background: #111;
+    color: #fff;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
 }
 
 a:hover .hh-exp-123-cta,
 a:focus-visible .hh-exp-123-cta {
-  background: #333;
+    background: #333;
 }

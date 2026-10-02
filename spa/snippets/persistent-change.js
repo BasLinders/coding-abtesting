@@ -22,50 +22,50 @@
  */
 
 function persist(findTarget, apply, { root = document.body } = {}) {
-  const done = new WeakSet();
-  const cleanups = [];
-  let scheduled = false;
+    const done = new WeakSet();
+    const cleanups = [];
+    let scheduled = false;
 
-  function run() {
-    scheduled = false;
-    let targets = findTarget();
-    if (!targets) return;
-    if (!(targets instanceof NodeList || Array.isArray(targets))) targets = [targets];
-    targets.forEach((el) => {
-      if (!el || done.has(el)) return;
-      done.add(el);
-      const cleanup = apply(el);
-      if (typeof cleanup === 'function') cleanups.push(cleanup);
+    function run() {
+        scheduled = false;
+        let targets = findTarget();
+        if (!targets) return;
+        if (!(targets instanceof NodeList || Array.isArray(targets))) targets = [targets];
+        targets.forEach((el) => {
+            if (!el || done.has(el)) return;
+            done.add(el);
+            const cleanup = apply(el);
+            if (typeof cleanup === 'function') cleanups.push(cleanup);
+        });
+    }
+
+    // Batch bursts of mutations into one run per frame (SPAs mutate a lot)
+    const observer = new MutationObserver(() => {
+        if (!scheduled) { scheduled = true; requestAnimationFrame(run); }
     });
-  }
+    run();
+    observer.observe(root, { childList: true, subtree: true });
 
-  // Batch bursts of mutations into one run per frame (SPAs mutate a lot)
-  const observer = new MutationObserver(() => {
-    if (!scheduled) { scheduled = true; requestAnimationFrame(run); }
-  });
-  run();
-  observer.observe(root, { childList: true, subtree: true });
-
-  return function stop() {
-    observer.disconnect();
-    cleanups.splice(0).forEach((fn) => fn());
-  };
+    return function stop() {
+        observer.disconnect();
+        cleanups.splice(0).forEach((fn) => fn());
+    };
 }
 
 // Usage with onRoute() from spa/snippets/url-change-listener.js
 let stopBadge;
 onRoute(/^\/products\//, {
-  enter: () => {
-    stopBadge = persist(
-      () => document.querySelector('[data-testid="product-price"]'),
-      (price) => {
-        const badge = document.createElement('div');
-        badge.className = 'hh-exp-123-badge';
-        badge.textContent = 'Free delivery today';
-        price.insertAdjacentElement('afterend', badge); // next to, not inside
-        return () => badge.remove();                     // cleanup
-      }
-    );
-  },
-  leave: () => stopBadge?.()
+    enter: () => {
+        stopBadge = persist(
+            () => document.querySelector('[data-testid="product-price"]'),
+            (price) => {
+                const badge = document.createElement('div');
+                badge.className = 'hh-exp-123-badge';
+                badge.textContent = 'Free delivery today';
+                price.insertAdjacentElement('afterend', badge); // next to, not inside
+                return () => badge.remove();                     // cleanup
+            }
+        );
+    },
+    leave: () => stopBadge?.()
 });

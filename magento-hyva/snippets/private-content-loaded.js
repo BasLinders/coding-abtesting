@@ -25,23 +25,23 @@
  */
 
 function onHyvaSections(callback) {
-  // 1. Cached data, if present
-  try {
-    const cached = JSON.parse(localStorage.getItem('mage-cache-storage') || '{}');
-    if (cached?.cart) callback(cached);
-  } catch (e) { /* storage unavailable or invalid JSON */ }
+    // 1. Cached data, if present
+    try {
+        const cached = JSON.parse(localStorage.getItem('mage-cache-storage') || '{}');
+        if (cached?.cart) callback(cached);
+    } catch (e) { /* storage unavailable or invalid JSON */ }
 
-  // 2. Fresh data now and after every update
-  window.addEventListener('private-content-loaded', (event) => {
-    callback(event.detail.data || {});
-  });
+    // 2. Fresh data now and after every update
+    window.addEventListener('private-content-loaded', (event) => {
+        callback(event.detail.data || {});
+    });
 }
 
 // Usage
 onHyvaSections((data) => {
-  const cart = data.cart || {};
-  const subtotal = Number(cart.subtotalAmount || 0);
-  console.log('Cart subtotal:', subtotal, 'items:', cart.summary_count || 0);
+    const cart = data.cart || {};
+    const subtotal = Number(cart.subtotalAmount || 0);
+    console.log('Cart subtotal:', subtotal, 'items:', cart.summary_count || 0);
 });
 
 // Ask Hyvä to fetch fresh section data (e.g. after your test added a product with fetch)

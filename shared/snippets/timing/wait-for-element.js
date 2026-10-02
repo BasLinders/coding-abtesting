@@ -24,33 +24,33 @@
  */
 
 function waitForElement(selector, { interval = 50, timeout = 10000, root = document } = {}) {
-  return new Promise((resolve, reject) => {
-    const found = root.querySelector(selector);
-    if (found) return resolve(found);
+    return new Promise((resolve, reject) => {
+        const found = root.querySelector(selector);
+        if (found) return resolve(found);
 
-    const start = Date.now();
-    const timer = setInterval(() => {
-      const el = root.querySelector(selector);
-      if (el) {
-        clearInterval(timer);
-        resolve(el);
-      } else if (Date.now() - start >= timeout) {
-        clearInterval(timer);
-        reject(new Error(`waitForElement: "${selector}" not found within ${timeout}ms`));
-      }
-    }, interval);
-  });
+        const start = Date.now();
+        const timer = setInterval(() => {
+            const el = root.querySelector(selector);
+            if (el) {
+                clearInterval(timer);
+                resolve(el);
+            } else if (Date.now() - start >= timeout) {
+                clearInterval(timer);
+                reject(new Error(`waitForElement: "${selector}" not found within ${timeout}ms`));
+            }
+        }, interval);
+    });
 }
 
 // Usage
 waitForElement('.element')
-  .then((el) => {
-    // Apply the experiment changes here
-  })
-  .catch((err) => console.warn(err.message));
+    .then((el) => {
+        // Apply the experiment changes here
+    })
+    .catch((err) => console.warn(err.message));
 
 // Wait for several elements at once
 Promise.all([waitForElement('.product-title'), waitForElement('.add-to-cart')])
-  .then(([title, button]) => {
-    // Both elements exist
-  });
+    .then(([title, button]) => {
+        // Both elements exist
+    });

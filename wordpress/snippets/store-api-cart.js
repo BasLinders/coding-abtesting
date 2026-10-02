@@ -24,25 +24,25 @@
  */
 
 function getWooCart() {
-  const root = window.wcSettings?.storeApiRoot || '/wp-json/wc/store/v1/';
-  return fetch(root.replace(/\/?$/, '/') + 'cart', { credentials: 'same-origin' })
-    .then((res) => {
-      if (!res.ok) throw new Error('Store API ' + res.status);
-      return res.json();
-    })
-    .then((cart) => {
-      const unit = 10 ** (cart.totals.currency_minor_unit || 0);
-      return {
-        raw: cart,
-        count: cart.items_count,
-        subtotal: Number(cart.totals.total_items) / unit,
-        total: Number(cart.totals.total_price) / unit,
-        currency: cart.totals.currency_code
-      };
-    });
+    const root = window.wcSettings?.storeApiRoot || '/wp-json/wc/store/v1/';
+    return fetch(root.replace(/\/?$/, '/') + 'cart', { credentials: 'same-origin' })
+        .then((res) => {
+            if (!res.ok) throw new Error('Store API ' + res.status);
+            return res.json();
+        })
+        .then((cart) => {
+            const unit = 10 ** (cart.totals.currency_minor_unit || 0);
+            return {
+                raw: cart,
+                count: cart.items_count,
+                subtotal: Number(cart.totals.total_items) / unit,
+                total: Number(cart.totals.total_price) / unit,
+                currency: cart.totals.currency_code
+            };
+        });
 }
 
 // Usage
 getWooCart()
-  .then((cart) => console.log('Subtotal:', cart.subtotal, cart.currency, 'items:', cart.count))
-  .catch((err) => console.warn(err.message));
+    .then((cart) => console.log('Subtotal:', cart.subtotal, cart.currency, 'items:', cart.count))
+    .catch((err) => console.warn(err.message));

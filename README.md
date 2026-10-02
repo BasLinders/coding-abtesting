@@ -17,6 +17,7 @@ _base-context.md          ← instructions for every Claude Project
 qa-checklist.md           ← check before every launch
 _templates/               ← templates for new recipes and snippets
 docs/                     ← roadmap
+tests/                    ← automated checks for every recipe and snippet (npm test)
 
 shared/                   ← works on every platform
   snippets/               timing · performance · debugging · tracking · dom · utilities
@@ -55,6 +56,17 @@ For a site that is both a platform and an SPA (e.g. a headless Shopify front-end
 - **Test ID everywhere**: class on `<html>` (`hh-exp-123`), and as prefix for every new class/ID (`hh-exp-123-banner`).
 - **JS and CSS separate**, in the tool's own fields.
 - **Re-rendered content** (Alpine, React, cart drawers, checkouts) uses the **MutationObserver + WeakSet** pattern.
+
+## Tests (for whoever maintains this repository)
+Every recipe and snippet is checked automatically. Requires Node.js 22 or newer.
+```
+npm install
+npm test
+```
+- **Rule checks**: every recipe follows the mandatory code structure from `_base-context.md` (IIFE + `'use strict'`, `CONFIG` first, debug, modular `init()`, start-up, insertion, observers), and every JS/CSS file follows the code rules (no `var`, no jQuery, 4-space indentation, ...).
+- **Behaviour tests**: every recipe runs in a simulated browser on a small test page. The tests check that the change appears in the right place, isn't duplicated, and handles missing elements and fallbacks.
+
+Adding a recipe? Add a test for it in `tests/recipes.test.js`. `npm test` fails until you do.
 
 ## Roadmap
 See [docs/roadmap.md](docs/roadmap.md) for what's done and what's next.

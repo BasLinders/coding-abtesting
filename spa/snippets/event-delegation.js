@@ -20,18 +20,18 @@
  */
 
 function delegate(eventType, selector, handler, { capture = true } = {}) {
-  const listener = (event) => {
-    const match = event.target.closest?.(selector);
-    if (match) handler(event, match);
-  };
-  document.addEventListener(eventType, listener, { capture });
-  return () => document.removeEventListener(eventType, listener, { capture });
+    const listener = (event) => {
+        const match = event.target.closest?.(selector);
+        if (match) handler(event, match);
+    };
+    document.addEventListener(eventType, listener, { capture });
+    return () => document.removeEventListener(eventType, listener, { capture });
 }
 
 // Usage: track clicks on the add-to-cart button, however often it is re-rendered
 if (!window.__hhExp123Delegated) {
-  window.__hhExp123Delegated = true;
-  delegate('click', '[data-testid="add-to-cart"], form[action*="cart"] button[type="submit"]', () => {
-    // Fire the testing tool's goal here (see _base-context.md)
-  });
+    window.__hhExp123Delegated = true;
+    delegate('click', '[data-testid="add-to-cart"], form[action*="cart"] button[type="submit"]', () => {
+        // Fire the testing tool's goal here (see _base-context.md)
+    });
 }

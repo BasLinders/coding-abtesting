@@ -30,45 +30,45 @@
  */
 
 function onElements(selector, callback, { root = document.documentElement, attributes = false } = {}) {
-  const handled = new WeakSet();
+    const handled = new WeakSet();
 
-  function scan() {
-    root.querySelectorAll(selector).forEach((el) => {
-      if (handled.has(el)) return;
-      handled.add(el);
-      callback(el);
-    });
-  }
+    function scan() {
+        root.querySelectorAll(selector).forEach((el) => {
+            if (handled.has(el)) return;
+            handled.add(el);
+            callback(el);
+        });
+    }
 
-  scan();
-  const observer = new MutationObserver(scan);
-  observer.observe(root, { childList: true, subtree: true, attributes });
+    scan();
+    const observer = new MutationObserver(scan);
+    observer.observe(root, { childList: true, subtree: true, attributes });
 
-  return function stop() {
-    observer.disconnect();
-  };
+    return function stop() {
+        observer.disconnect();
+    };
 }
 
 // Usage: change every product card, including cards loaded by infinite scroll
 const stopCards = onElements('.product-card', (card) => {
-  card.classList.add('hh-exp-123-card');
+    card.classList.add('hh-exp-123-card');
 });
 
 // Usage: run once when a checkout step becomes active, then stop observing
 const stopStep = onElements('.checkout-step.active', (step) => {
-  // Apply changes to the active step
-  stopStep();
+    // Apply changes to the active step
+    stopStep();
 }, { attributes: true });
 
 /* -----------------------------------------------------------------------------
  * Lower-level version: react to a specific attribute change on one element
  * --------------------------------------------------------------------------- */
 function onAttributeChange(el, attributeName, callback) {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((m) => {
-      if (m.attributeName === attributeName) callback(el.getAttribute(attributeName), m.oldValue);
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((m) => {
+            if (m.attributeName === attributeName) callback(el.getAttribute(attributeName), m.oldValue);
+        });
     });
-  });
-  observer.observe(el, { attributes: true, attributeOldValue: true, attributeFilter: [attributeName] });
-  return () => observer.disconnect();
+    observer.observe(el, { attributes: true, attributeOldValue: true, attributeFilter: [attributeName] });
+    return () => observer.disconnect();
 }

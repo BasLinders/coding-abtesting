@@ -19,14 +19,14 @@
  */
 
 function domReady(fn) {
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    fn();
-  } else {
-    document.addEventListener('DOMContentLoaded', fn, { once: true });
-  }
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+        fn();
+    } else {
+        document.addEventListener('DOMContentLoaded', fn, { once: true });
+    }
 }
 
 // Usage
 domReady(() => {
-  // Call the code or functions here
+    // Call the code or functions here
 });

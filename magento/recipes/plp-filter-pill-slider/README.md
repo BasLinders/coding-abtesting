@@ -8,8 +8,6 @@
 ## What it does
 Adds a horizontally scrollable row of pill links above the product grid, with a different set per category URL. It uses CSS scroll-snap: swipe on touch devices, arrow buttons on desktop. Optionally renames the filter button.
 
-The previous version of this recipe used the slick (jQuery) slider through RequireJS. That is no longer needed.
-
 ## What you need before you start
 - [ ] The category URLs and, per URL, the pills (label + link)
 - [ ] Selector of the element the pills should appear above

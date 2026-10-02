@@ -25,21 +25,21 @@
  */
 
 function onCheckoutTotals(callback) {
-  const start = Date.now();
-  (function poll() {
-    if (typeof window.require === 'function' && window.checkoutConfig) {
-      return window.require(['Magento_Checkout/js/model/quote'], (quote) => {
-        if (quote.totals()) callback(quote.totals());
-        quote.totals.subscribe(callback);
-      });
-    }
-    if (Date.now() - start < 15000) setTimeout(poll, 100);
-  })();
+    const start = Date.now();
+    (function poll() {
+        if (typeof window.require === 'function' && window.checkoutConfig) {
+            return window.require(['Magento_Checkout/js/model/quote'], (quote) => {
+                if (quote.totals()) callback(quote.totals());
+                quote.totals.subscribe(callback);
+            });
+        }
+        if (Date.now() - start < 15000) setTimeout(poll, 100);
+    })();
 }
 
 // Usage
 onCheckoutTotals((totals) => {
-  const segment = (code) => (totals.total_segments || []).find((s) => s.code === code);
-  const grandTotal = segment('grand_total') ? segment('grand_total').value : totals.grand_total;
-  console.log('Subtotal excl. tax:', totals.subtotal, 'Grand total:', grandTotal);
+    const segment = (code) => (totals.total_segments || []).find((s) => s.code === code);
+    const grandTotal = segment('grand_total') ? segment('grand_total').value : totals.grand_total;
+    console.log('Subtotal excl. tax:', totals.subtotal, 'Grand total:', grandTotal);
 });

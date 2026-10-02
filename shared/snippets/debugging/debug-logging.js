@@ -17,30 +17,30 @@
  */
 
 (function () {
-  'use strict';
+    'use strict';
 
-  const CONFIG = {
-    testId: 'hh-exp-123',   // [TEST_ID]
-    debug: false            // true = log to console. Or add ?hh_debug=1 to the URL
-  };
+    const CONFIG = {
+        testId: 'hh-exp-123',   // [TEST_ID]
+        debug: false            // true = log to console. Or add ?hh_debug=1 to the URL
+    };
 
-  /* ================================= DEBUG ================================== */
-  const DEBUG = CONFIG.debug || new URLSearchParams(window.location.search).has('hh_debug');
-  const LOG_STYLES = {
-    intro: 'color: #fff; background: #0077b6; padding: 2px 5px; border-radius: 3px; font-weight: bold;',
-    tag: 'color: #000; background: #caf0f8; padding: 2px 5px; font-weight: bold;',
-    text: 'color: inherit;'
-  };
-  function log(msg, ...args) {
-    if (!DEBUG) return;
-    console.log(`%cAB-TEST%c${CONFIG.testId}%c ${msg}`, LOG_STYLES.intro, LOG_STYLES.tag, LOG_STYLES.text, ...args);
-  }
+    /* ================================= DEBUG ================================== */
+    const DEBUG = CONFIG.debug || new URLSearchParams(window.location.search).has('hh_debug');
+    const LOG_STYLES = {
+        intro: 'color: #fff; background: #0077b6; padding: 2px 5px; border-radius: 3px; font-weight: bold;',
+        tag: 'color: #000; background: #caf0f8; padding: 2px 5px; font-weight: bold;',
+        text: 'color: inherit;'
+    };
+    function log(msg, ...args) {
+        if (!DEBUG) return;
+        console.log(`%cAB-TEST%c${CONFIG.testId}%c ${msg}`, LOG_STYLES.intro, LOG_STYLES.tag, LOG_STYLES.text, ...args);
+    }
 
-  // Usage
-  try {
-    log('Variation started');
-    log('Found element', document.querySelector('h1'));
-  } catch (err) {
-    log('Error', err);
-  }
+    // Usage
+    try {
+        log('Variation started');
+        log('Found element', document.querySelector('h1'));
+    } catch (err) {
+        log('Error', err);
+    }
 })();

@@ -1,26 +1,26 @@
 .hh-exp-123-totals {
-  margin: 0 0 16px;
-  padding: 12px 16px;
-  border: 1px solid #e3e3e3;
-  border-radius: 4px;
-  background: #fafafa;
-  font-size: 14px;
+    margin: 0 0 16px;
+    padding: 12px 16px;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    background: #fafafa;
+    font-size: 14px;
 }
 
 .hh-exp-123-totals__row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
 }
 
 .hh-exp-123-totals__row + .hh-exp-123-totals__row {
-  margin-top: 6px;
-  padding-top: 6px;
-  border-top: 1px solid #e3e3e3;
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px solid #e3e3e3;
 }
 
 .hh-exp-123-totals__value {
-  font-weight: 700;
-  white-space: nowrap;
-  font-variant-numeric: tabular-nums;
+    font-weight: 700;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
 }

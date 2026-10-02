@@ -1,6 +1,6 @@
 # Recipe: Rebuild the mobile menu into three layers
 
-**Works with:** all platforms with a server-rendered mobile menu (originally built for a Bootstrap 4 menu on a Salesforce Commerce Cloud storefront). The site's menu classes are in `CONFIG.siteClasses` · **Difficulty:** advanced
+**Works with:** all platforms with a server-rendered mobile menu (the example classes in `CONFIG.siteClasses` are Bootstrap 4; replace them with the site's own) · **Difficulty:** advanced
 
 ## Hypothesis example
 > Because mobile visitors have to scroll through a long, flat list of categories to find the right product type, we expect that grouping the menu into a few main categories (layer 1), product groups (layer 2) and product types (layer 3) will increase the share of visitors who reach a category page, and with it the conversion rate.
@@ -47,24 +47,6 @@ Original top-level items to hide: [IDs]
 HTML of the mobile menu with one submenu open:
 [PASTE HTML]
 ```
-
-## Analysis of the original test
-This recipe was extracted from a test that ran successfully. These are the changes made while turning it into a reusable recipe:
-
-| Original | In this recipe | Why |
-|---|---|---|
-| Copy, structure and site classes spread over several objects and the code | Everything in `CONFIG` | Rule 2: adapt the test without reading the logic |
-| Language pattern needed a trailing slash (`/de-de/`) | Slash optional | `/de-de` without a slash also matches |
-| Language checked against the category copy only, then headings read with `headingTranslations[lang][key]` | Every lookup falls back to the default language, then to the key | Crashed when a language had category copy but no heading copy |
-| Outdoor menu used the indoor lighting heading (`group_lighting`) | Separate keys per heading in the example | The outdoor heading linked to the indoor lighting page. Check your keys. |
-| Layer 1 links were the same for every language (`/indoor`) | Per language in `CONFIG.copy` | Other languages need their own path prefix (`/de-de/...`) |
-| No guard against running twice | `isAlreadyApplied()` | Testing tools can run code twice, and the menu was then built twice |
-| Hid items with `style.display = 'none'`, inline flex styles | CSS classes in `variant.css` | Keeps JS and CSS separate, easy to adjust |
-| `appendChild` / `prepend` | `insertAdjacentElement`, position in `CONFIG.insert` | Rule 6 |
-| `a#${id}` | `CSS.escape(id)` | IDs starting with a digit broke the selector |
-| Back button had `aria-label="Back"` | `aria-label="Back: <title>"` | The label replaced the visible title for screen readers and voice control |
-| Mobile check with `innerWidth` | `matchMedia` with `maxWidth` in `CONFIG` | Same breakpoint logic as CSS, and the value is configurable |
-| Empty categories were still added | Skipped (and logged) | An empty panel is a dead end on mobile |
 
 ## Pitfalls
 - **The site's own menu script.** If the site's JS also reacts to clicks on `.dropdown-toggle` links, both scripts may open/close panels. The recipe calls `stopPropagation()` on its own links. If panels still behave oddly, check whether the site uses `data-toggle` attributes or event delegation on the menu.

@@ -16,14 +16,14 @@
 const PERF_ID = 'hh-exp-123';
 
 function measureStart(label = PERF_ID) {
-  performance.mark(`${label}-start`);
+    performance.mark(`${label}-start`);
 }
 
 function measureEnd(label = PERF_ID) {
-  performance.mark(`${label}-end`);
-  const m = performance.measure(label, `${label}-start`, `${label}-end`);
-  console.log(`[${label}] ${Math.round(m.duration)} ms`);
-  return m.duration;
+    performance.mark(`${label}-end`);
+    const m = performance.measure(label, `${label}-start`, `${label}-end`);
+    console.log(`[${label}] ${Math.round(m.duration)} ms`);
+    return m.duration;
 }
 
 // Usage

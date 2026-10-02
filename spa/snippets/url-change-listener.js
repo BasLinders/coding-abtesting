@@ -28,43 +28,43 @@
  */
 
 function onUrlChange(callback) {
-  if (!window.__hhUrlChange) {
-    window.__hhUrlChange = { listeners: [], last: location.href };
-    const notify = () => {
-      if (location.href === window.__hhUrlChange.last) return;
-      window.__hhUrlChange.last = location.href;
-      window.__hhUrlChange.listeners.forEach((fn) => fn(location.href));
-    };
-    ['pushState', 'replaceState'].forEach((method) => {
-      const original = history[method];
-      history[method] = function (...args) {
-        const result = original.apply(this, args);
-        notify();
-        return result;
-      };
-    });
-    window.addEventListener('popstate', notify);
-  }
-  window.__hhUrlChange.listeners.push(callback);
+    if (!window.__hhUrlChange) {
+        window.__hhUrlChange = { listeners: [], last: location.href };
+        const notify = () => {
+            if (location.href === window.__hhUrlChange.last) return;
+            window.__hhUrlChange.last = location.href;
+            window.__hhUrlChange.listeners.forEach((fn) => fn(location.href));
+        };
+        ['pushState', 'replaceState'].forEach((method) => {
+            const original = history[method];
+            history[method] = function (...args) {
+                const result = original.apply(this, args);
+                notify();
+                return result;
+            };
+        });
+        window.addEventListener('popstate', notify);
+    }
+    window.__hhUrlChange.listeners.push(callback);
 }
 
 function onRoute(match, { enter, leave }) {
-  const test = typeof match === 'function' ? match : (url) => match.test(new URL(url).pathname);
-  let active = false;
-  const check = (url) => {
-    const matches = test(url);
-    if (matches && !active) { active = true; enter?.(); }
-    else if (!matches && active) { active = false; leave?.(); }
-  };
-  check(location.href);
-  onUrlChange(check);
+    const test = typeof match === 'function' ? match : (url) => match.test(new URL(url).pathname);
+    let active = false;
+    const check = (url) => {
+        const matches = test(url);
+        if (matches && !active) { active = true; enter?.(); }
+        else if (!matches && active) { active = false; leave?.(); }
+    };
+    check(location.href);
+    onUrlChange(check);
 }
 
 // Usage: only on product pages
 onRoute(/^\/products\//, {
-  enter: () => document.documentElement.classList.add('hh-exp-123'),
-  leave: () => {
-    document.documentElement.classList.remove('hh-exp-123');
-    document.querySelectorAll('.hh-exp-123-inserted').forEach((el) => el.remove());
-  }
+    enter: () => document.documentElement.classList.add('hh-exp-123'),
+    leave: () => {
+        document.documentElement.classList.remove('hh-exp-123');
+        document.querySelectorAll('.hh-exp-123-inserted').forEach((el) => el.remove());
+    }
 });

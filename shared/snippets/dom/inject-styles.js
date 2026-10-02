@@ -23,24 +23,24 @@
  */
 
 function injectStyles(id, css) {
-  if (document.getElementById(id)) return;
-  const style = document.createElement('style');
-  style.id = id;
-  style.textContent = css;
-  document.head.insertAdjacentElement('beforeend', style);
+    if (document.getElementById(id)) return;
+    const style = document.createElement('style');
+    style.id = id;
+    style.textContent = css;
+    document.head.insertAdjacentElement('beforeend', style);
 }
 
 // Usage: only restyle the price block when the tiered-price table exists
 if (document.querySelector('.product-tier-prices')) {
-  injectStyles('hh-exp-123-styles', `
-    .product-price-container {
-      display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 18px;
-    }
-    @media (max-width: 991px) {
-      .product-price-amount { font-size: 2.5rem; }
-    }
-  `);
+    injectStyles('hh-exp-123-styles', `
+        .product-price-container {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-bottom: 18px;
+        }
+        @media (max-width: 991px) {
+            .product-price-amount { font-size: 2.5rem; }
+        }
+    `);
 }

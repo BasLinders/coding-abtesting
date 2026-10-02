@@ -17,7 +17,7 @@
  */
 
 function snippetName() {
-  // Vanilla JS only, no jQuery
+    // Vanilla JS only, no jQuery
 }
 
 // Usage

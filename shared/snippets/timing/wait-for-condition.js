@@ -19,29 +19,29 @@
  */
 
 function waitFor(check, { interval = 50, timeout = 10000 } = {}) {
-  return new Promise((resolve, reject) => {
-    const start = Date.now();
-    (function poll() {
-      let result;
-      try {
-        result = check();
-      } catch (e) {
-        result = undefined;
-      }
-      if (result) return resolve(result);
-      if (Date.now() - start >= timeout) return reject(new Error('waitFor: condition not met within ' + timeout + 'ms'));
-      setTimeout(poll, interval);
-    })();
-  });
+    return new Promise((resolve, reject) => {
+        const start = Date.now();
+        (function poll() {
+            let result;
+            try {
+                result = check();
+            } catch (e) {
+                result = undefined;
+            }
+            if (result) return resolve(result);
+            if (Date.now() - start >= timeout) return reject(new Error('waitFor: condition not met within ' + timeout + 'ms'));
+            setTimeout(poll, interval);
+        })();
+    });
 }
 
 // Usage: wait for a library
 waitFor(() => window.dataLayer).then((dataLayer) => {
-  // dataLayer is available
+    // dataLayer is available
 });
 
 // Usage: wait for a specific state
 waitFor(() => document.querySelectorAll('.product-card').length >= 4 && document.querySelectorAll('.product-card'))
-  .then((cards) => {
-    // At least 4 product cards rendered
-  });
+    .then((cards) => {
+        // At least 4 product cards rendered
+    });

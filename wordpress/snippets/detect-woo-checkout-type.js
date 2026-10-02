@@ -9,15 +9,15 @@
  */
 
 function getWooCartType() {
-  if (document.querySelector('.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout')) return 'blocks';
-  if (document.querySelector('form.woocommerce-cart-form, form.woocommerce-checkout')) return 'classic';
-  return null; // not a cart/checkout page, or not rendered yet
+    if (document.querySelector('.wp-block-woocommerce-cart, .wp-block-woocommerce-checkout')) return 'blocks';
+    if (document.querySelector('form.woocommerce-cart-form, form.woocommerce-checkout')) return 'classic';
+    return null; // not a cart/checkout page, or not rendered yet
 }
 
 // Usage
 const cartType = getWooCartType();
 if (cartType === 'blocks') {
-  // React-based: see wordpress/snippets/on-cart-update.js and spa/_platform-context.md
+    // React-based: see wordpress/snippets/on-cart-update.js and spa/_platform-context.md
 } else if (cartType === 'classic') {
-  // PHP + AJAX-replaced blocks: use the WeakSet observer pattern
+    // PHP + AJAX-replaced blocks: use the WeakSet observer pattern
 }

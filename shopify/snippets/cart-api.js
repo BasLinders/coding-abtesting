@@ -21,22 +21,22 @@
 const cartRoot = () => window.Shopify?.routes?.root ?? '/';
 
 function getCart() {
-  return fetch(cartRoot() + 'cart.js', { credentials: 'same-origin' }).then((r) => r.json());
+    return fetch(cartRoot() + 'cart.js', { credentials: 'same-origin' }).then((r) => r.json());
 }
 
 function addToCart(variantId, quantity = 1) {
-  return fetch(cartRoot() + 'cart/add.js', {
-    method: 'POST',
-    credentials: 'same-origin',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify({ items: [{ id: variantId, quantity }] })
-  }).then((r) => {
-    if (!r.ok) return r.json().then((err) => { throw new Error(err.description || 'add to cart failed'); });
-    return r.json();
-  });
+    return fetch(cartRoot() + 'cart/add.js', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: variantId, quantity }] })
+    }).then((r) => {
+        if (!r.ok) return r.json().then((err) => { throw new Error(err.description || 'add to cart failed'); });
+        return r.json();
+    });
 }
 
 // Usage
 getCart().then((cart) => {
-  console.log('Items:', cart.item_count, 'Subtotal:', cart.items_subtotal_price / 100, cart.currency);
+    console.log('Items:', cart.item_count, 'Subtotal:', cart.items_subtotal_price / 100, cart.currency);
 });

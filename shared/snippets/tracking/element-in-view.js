@@ -18,21 +18,21 @@
  */
 
 function onInView(el, callback, { threshold = 0.5, once = true } = {}) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      callback(entry.target);
-      if (once) observer.unobserve(entry.target);
-    });
-  }, { threshold });
-  observer.observe(el);
-  return () => observer.disconnect();
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            callback(entry.target);
+            if (once) observer.unobserve(entry.target);
+        });
+    }, { threshold });
+    observer.observe(el);
+    return () => observer.disconnect();
 }
 
 // Usage
 const target = document.querySelector('.featured-products');
 if (target) {
-  onInView(target, () => {
-    // Fire the goal / event here (see _base-context.md for the tool's goal API)
-  });
+    onInView(target, () => {
+        // Fire the goal / event here (see _base-context.md for the tool's goal API)
+    });
 }

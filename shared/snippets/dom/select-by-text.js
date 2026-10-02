@@ -23,21 +23,21 @@
  */
 
 function findByText(text, { selector = '*', exact = false, root = document } = {}) {
-  const needle = text.trim().toLowerCase();
-  return Array.from(root.querySelectorAll(selector)).filter((el) => {
-    const ownText = Array.from(el.childNodes)
-      .filter((n) => n.nodeType === Node.TEXT_NODE)
-      .map((n) => n.textContent)
-      .join('')
-      .trim()
-      .toLowerCase();
-    return exact ? ownText === needle : ownText.includes(needle);
-  });
+    const needle = text.trim().toLowerCase();
+    return Array.from(root.querySelectorAll(selector)).filter((el) => {
+        const ownText = Array.from(el.childNodes)
+            .filter((n) => n.nodeType === Node.TEXT_NODE)
+            .map((n) => n.textContent)
+            .join('')
+            .trim()
+            .toLowerCase();
+        return exact ? ownText === needle : ownText.includes(needle);
+    });
 }
 
 // Usage: hide the shipping-costs row on the cart page
 if (window.location.pathname === '/cart') {
-  const label = findByText('Shipping', { selector: 'th, td, span, div' })[0];
-  const row = label?.closest('tr, .totals-row');
-  if (row) row.classList.add('hh-exp-123-hidden');
+    const label = findByText('Shipping', { selector: 'th, td, span, div' })[0];
+    const row = label?.closest('tr, .totals-row');
+    if (row) row.classList.add('hh-exp-123-hidden');
 }

@@ -46,8 +46,6 @@ CONFIG.settings.languagePattern = /\/([a-z]{2}-[a-z]{2})(?:\/|$)/i
 | `/products/shoe` | default language |
 | `/es-es/` but no `es-es` in `CONFIG.copy` | default language |
 
-Compared with the original function this recipe is based on, the slash after the code is optional (so `/gb-en` matches as well as `/gb-en/`), and the default language and pattern are in `CONFIG` instead of hardcoded.
-
 ## Pitfalls
 - **Other URL formats.** Change `languagePattern` and keep one capture group:
   - `/en/` (language only): `/\/([a-z]{2})(?:\/|$)/i`

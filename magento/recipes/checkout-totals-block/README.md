@@ -32,7 +32,7 @@ HTML around the place-order button:
 ```
 
 ## Pitfalls
-- **Third-party checkouts.** Some do not use `Magento_Checkout/js/model/quote`, or wrap it. Paste the console output into the prompt so the LLM uses the real data. (The original version of this recipe read the totals from a checkout extension's `window` config object. Check `window` for an object like that.)
+- **Third-party checkouts.** Some do not use `Magento_Checkout/js/model/quote`, or wrap it. Paste the console output into the prompt so the LLM uses the real data. Some checkout extensions also keep the totals in their own config object on `window`.
 - **One agreements block per payment method.** Luma renders one inside each payment method's content and hides the unselected ones. The recipe inserts a block next to each, so only the selected method's block is visible.
 - **Tax display settings.** Whether `grand_total` includes tax depends on the store config. The recipe uses the `grand_total` total segment, which matches what the sidebar shows.
 

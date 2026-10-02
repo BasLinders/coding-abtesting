@@ -15,21 +15,21 @@
  */
 
 function luhnCheck(input) {
-  const digits = String(input).replace(/\D/g, '');
-  if (digits.length < 12 || digits.length > 19) return false;
+    const digits = String(input).replace(/\D/g, '');
+    if (digits.length < 12 || digits.length > 19) return false;
 
-  let sum = 0;
-  let double = false;
-  for (let i = digits.length - 1; i >= 0; i--) {
-    let n = Number(digits[i]);
-    if (double) {
-      n *= 2;
-      if (n > 9) n -= 9;
+    let sum = 0;
+    let double = false;
+    for (let i = digits.length - 1; i >= 0; i--) {
+        let n = Number(digits[i]);
+        if (double) {
+            n *= 2;
+            if (n > 9) n -= 9;
+        }
+        sum += n;
+        double = !double;
     }
-    sum += n;
-    double = !double;
-  }
-  return sum % 10 === 0;
+    return sum % 10 === 0;
 }
 
 // Usage

@@ -15,26 +15,26 @@
  */
 
 function onVariantChange(callback) {
-  let last = null;
-  const read = () => {
-    const fromUrl = new URLSearchParams(window.location.search).get('variant');
-    const input = document.querySelector('form[action*="/cart/add"] [name="id"]');
-    return fromUrl || input?.value;
-  };
-  const check = () => {
-    // Wait a tick so the theme can update the URL / hidden input first
-    setTimeout(() => {
-      const id = read();
-      if (id && id !== last) { last = id; callback(id); }
-    }, 50);
-  };
-  document.addEventListener('change', (e) => {
-    if (e.target.closest('variant-selects, variant-radios, form[action*="/cart/add"], .product-form')) check();
-  });
-  check();
+    let last = null;
+    const read = () => {
+        const fromUrl = new URLSearchParams(window.location.search).get('variant');
+        const input = document.querySelector('form[action*="/cart/add"] [name="id"]');
+        return fromUrl || input?.value;
+    };
+    const check = () => {
+        // Wait a tick so the theme can update the URL / hidden input first
+        setTimeout(() => {
+            const id = read();
+            if (id && id !== last) { last = id; callback(id); }
+        }, 50);
+    };
+    document.addEventListener('change', (e) => {
+        if (e.target.closest('variant-selects, variant-radios, form[action*="/cart/add"], .product-form')) check();
+    });
+    check();
 }
 
 // Usage
 onVariantChange((variantId) => {
-  console.log('Selected variant:', variantId);
+    console.log('Selected variant:', variantId);
 });

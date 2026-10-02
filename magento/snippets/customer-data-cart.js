@@ -26,22 +26,22 @@
  */
 
 function onMagentoCart(callback) {
-  const start = Date.now();
-  (function poll() {
-    if (typeof window.require === 'function') {
-      return window.require(['Magento_Customer/js/customer-data'], (customerData) => {
-        const cart = customerData.get('cart');
-        callback(cart());          // current value
-        cart.subscribe(callback);  // every update
-      });
-    }
-    if (Date.now() - start < 10000) setTimeout(poll, 50);
-  })();
+    const start = Date.now();
+    (function poll() {
+        if (typeof window.require === 'function') {
+            return window.require(['Magento_Customer/js/customer-data'], (customerData) => {
+                const cart = customerData.get('cart');
+                callback(cart());          // current value
+                cart.subscribe(callback);  // every update
+            });
+        }
+        if (Date.now() - start < 10000) setTimeout(poll, 50);
+    })();
 }
 
 // Usage
 onMagentoCart((cart) => {
-  if (!cart || cart.subtotalAmount === undefined) return;
-  const subtotal = Number(cart.subtotalAmount);
-  console.log('Cart subtotal:', subtotal, 'items:', cart.summary_count);
+    if (!cart || cart.subtotalAmount === undefined) return;
+    const subtotal = Number(cart.subtotalAmount);
+    console.log('Cart subtotal:', subtotal, 'items:', cart.summary_count);
 });

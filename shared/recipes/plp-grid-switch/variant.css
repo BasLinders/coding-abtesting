@@ -1,38 +1,38 @@
 /* The switch is only visible within CONFIG.settings.maxWidth (JS adds .hh-exp-123-active to <html>) */
 .hh-exp-123-switch {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  margin: 12px 0 0 16px;
-  padding: 8px 0;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    margin: 12px 0 0 16px;
+    padding: 8px 0;
 }
 
 .hh-exp-123-active .hh-exp-123-switch {
-  display: flex;
+    display: flex;
 }
 
 .hh-exp-123-switch button {
-  padding: 2px;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: none;
-  color: #6b7280;          /* inactive: 4.8:1 contrast on white, so it stays visible */
-  line-height: 0;
-  cursor: pointer;
+    padding: 2px;
+    border: 0;
+    border-bottom: 2px solid transparent;
+    background: none;
+    color: #6b7280;          /* inactive: 4.8:1 contrast on white, so it stays visible */
+    line-height: 0;
+    cursor: pointer;
 }
 
 .hh-exp-123-switch button[aria-pressed="true"] {
-  border-bottom-color: currentColor; /* active state is not shown by colour alone */
-  color: #111827;
+    border-bottom-color: currentColor; /* active state is not shown by colour alone */
+    color: #111827;
 }
 
 .hh-exp-123-switch button:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
 }
 
 /* Column override. JS sets --hh-exp-123-cols to the chosen number.
    !important: beats the site's column utility classes (e.g. Tailwind grid-cols-2). */
 .hh-exp-123-active .hh-exp-123-grid {
-  grid-template-columns: repeat(var(--hh-exp-123-cols, 2), minmax(0, 1fr)) !important;
+    grid-template-columns: repeat(var(--hh-exp-123-cols, 2), minmax(0, 1fr)) !important;
 }

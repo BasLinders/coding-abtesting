@@ -21,16 +21,16 @@
  */
 
 function onShopifyCartChange(callback) {
-  const CART_CHANGE = /\/cart\/(add|change|update|clear)(\.js)?(\?|$)/;
-  const observer = new PerformanceObserver((list) => {
-    const changed = list.getEntries().some((entry) => CART_CHANGE.test(new URL(entry.name).pathname));
-    if (changed) callback();
-  });
-  observer.observe({ type: 'resource', buffered: false });
-  return () => observer.disconnect();
+    const CART_CHANGE = /\/cart\/(add|change|update|clear)(\.js)?(\?|$)/;
+    const observer = new PerformanceObserver((list) => {
+        const changed = list.getEntries().some((entry) => CART_CHANGE.test(new URL(entry.name).pathname));
+        if (changed) callback();
+    });
+    observer.observe({ type: 'resource', buffered: false });
+    return () => observer.disconnect();
 }
 
 // Usage (with shopify/snippets/cart-api.js)
 onShopifyCartChange(() => {
-  getCart().then((cart) => console.log('Cart changed, subtotal:', cart.items_subtotal_price / 100));
+    getCart().then((cart) => console.log('Cart changed, subtotal:', cart.items_subtotal_price / 100));
 });

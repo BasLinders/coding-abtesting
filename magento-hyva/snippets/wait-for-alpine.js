@@ -20,23 +20,23 @@
  */
 
 function whenAlpineReady({ timeout = 10000 } = {}) {
-  return new Promise((resolve, reject) => {
-    // Alpine adds an internal `_x_dataStack` property to each component once it is initialised
-    const isReady = () => window.Alpine && document.querySelector('[x-data]')?._x_dataStack;
-    if (isReady()) return resolve(window.Alpine);
+    return new Promise((resolve, reject) => {
+        // Alpine adds an internal `_x_dataStack` property to each component once it is initialised
+        const isReady = () => window.Alpine && document.querySelector('[x-data]')?._x_dataStack;
+        if (isReady()) return resolve(window.Alpine);
 
-    const timer = setTimeout(() => reject(new Error('whenAlpineReady: timeout')), timeout);
-    document.addEventListener('alpine:initialized', () => {
-      clearTimeout(timer);
-      resolve(window.Alpine);
-    }, { once: true });
-  });
+        const timer = setTimeout(() => reject(new Error('whenAlpineReady: timeout')), timeout);
+        document.addEventListener('alpine:initialized', () => {
+            clearTimeout(timer);
+            resolve(window.Alpine);
+        }, { once: true });
+    });
 }
 
 // Usage: read the selected configurable option on the product page
 whenAlpineReady().then((Alpine) => {
-  const form = document.querySelector('#product_addtocart_form');
-  if (!form) return;
-  const data = Alpine.$data(form);
-  console.log('Product form component data:', data);
+    const form = document.querySelector('#product_addtocart_form');
+    if (!form) return;
+    const data = Alpine.$data(form);
+    console.log('Product form component data:', data);
 });

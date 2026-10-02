@@ -65,9 +65,9 @@ The people using your code are often not developers. They must be able to adapt 
 End the IIFE with exactly this:
 ```js
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', init);
 } else {
-  init();
+    init();
 }
 ```
 Testing tools often inject variation code **after** `DOMContentLoaded` has already fired, so a bare `addEventListener('DOMContentLoaded', init)` would never run. This check covers both cases. "DOM ready" still doesn't mean late-rendered elements exist, so keep using `waitForElement()` or an observer for those.
@@ -76,7 +76,7 @@ Testing tools often inject variation code **after** `DOMContentLoaded` has alrea
 - Every time an element is placed on the site, define the insertion point in `CONFIG.insert` as a target selector plus a position:
   ```js
   insert: {
-    banner: { target: 'main', position: 'beforebegin' } // beforebegin | afterbegin | beforeend | afterend
+      banner: { target: 'main', position: 'beforebegin' } // beforebegin | afterbegin | beforeend | afterend
   }
   ```
   The comment at the top of `CONFIG` explains the four positions, so a non-developer can move the element just by changing `position`:
@@ -91,15 +91,15 @@ Testing tools often inject variation code **after** `DOMContentLoaded` has alrea
 - Every MutationObserver has its own entry in `CONFIG.observers`, with all of its settings:
   ```js
   observers: {
-    products: {
-      enabled: true,        // false = only handle elements that exist when the variation starts
-      root: 'body',         // [SELECTOR] container to watch: the smallest one that is not replaced itself
-      childList: true,      // watch elements being added or removed
-      subtree: true,        // also watch everything inside the root, not only its direct children
-      attributes: false,    // also watch attribute changes (e.g. a class becoming "active")
-      attributeFilter: [],  // only these attributes, e.g. ['class'] (empty = all). Used when attributes is true
-      stopAfter: 0          // stop watching after this many ms (0 = keep watching)
-    }
+      products: {
+          enabled: true,        // false = only handle elements that exist when the variation starts
+          root: 'body',         // [SELECTOR] container to watch: the smallest one that is not replaced itself
+          childList: true,      // watch elements being added or removed
+          subtree: true,        // also watch everything inside the root, not only its direct children
+          attributes: false,    // also watch attribute changes (e.g. a class becoming "active")
+          attributeFilter: [],  // only these attributes, e.g. ['class'] (empty = all). Used when attributes is true
+          stopAfter: 0          // stop watching after this many ms (0 = keep watching)
+      }
   }
   ```
 - Start observers only through the `observe()` helper from the skeleton. It reads these settings, logs when it starts or stops, logs a missing root, and wraps the callback in `try/catch`.
@@ -109,158 +109,158 @@ Testing tools often inject variation code **after** `DOMContentLoaded` has alrea
 Start every JavaScript answer from this skeleton. Recipes in the knowledge files follow it too.
 ```js
 (function () {
-  'use strict';
+    'use strict';
 
-  /* ================================= CONFIG =================================
-   * The only place to change values. Fill in everything marked [LIKE_THIS].
-   * Positions: beforebegin = before the target, afterbegin = inside, at the start,
-   *            beforeend = inside, at the end, afterend = after the target
-   * ========================================================================= */
-  const CONFIG = {
-    testId: 'hh-exp-123',                 // [TEST_ID] used for classes, IDs and log messages
-    debug: false,                         // true = log to console. Or add ?hh_debug=1 to the URL
-    selectors: {
-      product: '[SELECTOR]'               // one product card
-    },
-    insert: {
-      badge: { target: '[SELECTOR]', position: 'afterend' } // where the badge goes, relative to each card
-    },
-    observers: {
-      products: {
-        enabled: true,                    // false = only handle cards that exist at the start
-        root: 'body',                     // [SELECTOR] container to watch (smallest one that isn't replaced)
-        childList: true,                  // watch elements being added or removed
-        subtree: true,                    // also watch everything inside the root
-        attributes: false,                // also watch attribute changes
-        attributeFilter: [],              // only these attributes (empty = all), when attributes is true
-        stopAfter: 0                      // stop after this many ms (0 = keep watching)
-      }
-    },
-    copy: {
-      badge: '[COPY]'                     // text shown to the visitor
-    },
-    settings: {
-      timeout: 10000                      // ms to wait for elements before giving up
+    /* ================================= CONFIG =================================
+     * The only place to change values. Fill in everything marked [LIKE_THIS].
+     * Positions: beforebegin = before the target, afterbegin = inside, at the start,
+     *            beforeend = inside, at the end, afterend = after the target
+     * ========================================================================= */
+    const CONFIG = {
+        testId: 'hh-exp-123',                     // [TEST_ID] used for classes, IDs and log messages
+        debug: false,                             // true = log to console. Or add ?hh_debug=1 to the URL
+        selectors: {
+            product: '[SELECTOR]'                 // one product card
+        },
+        insert: {
+            badge: { target: '[SELECTOR]', position: 'afterend' } // where the badge goes, relative to each card
+        },
+        observers: {
+            products: {
+                enabled: true,                    // false = only handle cards that exist at the start
+                root: 'body',                     // [SELECTOR] container to watch (smallest one that isn't replaced)
+                childList: true,                  // watch elements being added or removed
+                subtree: true,                    // also watch everything inside the root
+                attributes: false,                // also watch attribute changes
+                attributeFilter: [],              // only these attributes (empty = all), when attributes is true
+                stopAfter: 0                      // stop after this many ms (0 = keep watching)
+            }
+        },
+        copy: {
+            badge: '[COPY]'                       // text shown to the visitor
+        },
+        settings: {
+            timeout: 10000                        // ms to wait for elements before giving up
+        }
+    };
+
+    /* ================================= DEBUG ================================== */
+    const DEBUG = CONFIG.debug || new URLSearchParams(window.location.search).has('hh_debug');
+    const LOG_STYLES = {
+        intro: 'color: #fff; background: #0077b6; padding: 2px 5px; border-radius: 3px; font-weight: bold;',
+        tag: 'color: #000; background: #caf0f8; padding: 2px 5px; font-weight: bold;',
+        text: 'color: inherit;'
+    };
+    function log(msg, ...args) {
+        if (!DEBUG) return;
+        console.log(`%cAB-TEST%c${CONFIG.testId}%c ${msg}`, LOG_STYLES.intro, LOG_STYLES.tag, LOG_STYLES.text, ...args);
     }
-  };
 
-  /* ================================= DEBUG ================================== */
-  const DEBUG = CONFIG.debug || new URLSearchParams(window.location.search).has('hh_debug');
-  const LOG_STYLES = {
-    intro: 'color: #fff; background: #0077b6; padding: 2px 5px; border-radius: 3px; font-weight: bold;',
-    tag: 'color: #000; background: #caf0f8; padding: 2px 5px; font-weight: bold;',
-    text: 'color: inherit;'
-  };
-  function log(msg, ...args) {
-    if (!DEBUG) return;
-    console.log(`%cAB-TEST%c${CONFIG.testId}%c ${msg}`, LOG_STYLES.intro, LOG_STYLES.tag, LOG_STYLES.text, ...args);
-  }
+    /* ================================ HELPERS ================================= */
+    const POSITIONS = ['beforebegin', 'afterbegin', 'beforeend', 'afterend'];
 
-  /* ================================ HELPERS ================================= */
-  const POSITIONS = ['beforebegin', 'afterbegin', 'beforeend', 'afterend'];
-
-  // Inserts `el` at CONFIG.insert.<name>. `root` makes the target selector relative to a container.
-  function insertAt(el, where, root = document) {
-    if (!POSITIONS.includes(where.position)) {
-      log(`Invalid position "${where.position}". Use one of: ${POSITIONS.join(', ')}`);
-      return null;
+    // Inserts `el` at CONFIG.insert.<name>. `root` makes the target selector relative to a container.
+    function insertAt(el, where, root = document) {
+        if (!POSITIONS.includes(where.position)) {
+            log(`Invalid position "${where.position}". Use one of: ${POSITIONS.join(', ')}`);
+            return null;
+        }
+        const target = root.querySelector(where.target);
+        if (!target) {
+            log('Insert target not found:', where.target);
+            return null;
+        }
+        target.insertAdjacentElement(where.position, el);
+        log(`Inserted ${where.position} ${where.target}`, el);
+        return el;
     }
-    const target = root.querySelector(where.target);
-    if (!target) {
-      log('Insert target not found:', where.target);
-      return null;
+
+    // Starts a MutationObserver with the settings from CONFIG.observers.<name>
+    function observe(settings, callback) {
+        if (!settings.enabled) {
+            log('Observer disabled in CONFIG');
+            return null;
+        }
+        const root = document.querySelector(settings.root);
+        if (!root) {
+            log('Observer root not found:', settings.root);
+            return null;
+        }
+        const options = { childList: settings.childList, subtree: settings.subtree, attributes: settings.attributes };
+        if (settings.attributes && settings.attributeFilter?.length) options.attributeFilter = settings.attributeFilter;
+        if (!options.childList && !options.attributes) {
+            log('Observer needs childList or attributes set to true');
+            return null;
+        }
+        const observer = new MutationObserver((mutations) => {
+            try {
+                callback(mutations);
+            } catch (err) {
+                log('Error in observer', err);
+            }
+        });
+        observer.observe(root, options);
+        log(`Observer started on ${settings.root}`);
+        if (settings.stopAfter > 0) {
+            setTimeout(() => {
+                observer.disconnect();
+                log(`Observer on ${settings.root} stopped after ${settings.stopAfter} ms`);
+            }, settings.stopAfter);
+        }
+        return observer;
     }
-    target.insertAdjacentElement(where.position, el);
-    log(`Inserted ${where.position} ${where.target}`, el);
-    return el;
-  }
 
-  // Starts a MutationObserver with the settings from CONFIG.observers.<name>
-  function observe(settings, callback) {
-    if (!settings.enabled) {
-      log('Observer disabled in CONFIG');
-      return null;
+    // Resolves when `selector` exists, rejects after CONFIG.settings.timeout
+    function waitForElement(selector, root = document) {
+        return new Promise((resolve, reject) => {
+            const start = Date.now();
+            (function poll() {
+                const el = root.querySelector(selector);
+                if (el) return resolve(el);
+                if (Date.now() - start >= CONFIG.settings.timeout) return reject(new Error(`Not found: ${selector}`));
+                setTimeout(poll, 50);
+            })();
+        });
     }
-    const root = document.querySelector(settings.root);
-    if (!root) {
-      log('Observer root not found:', settings.root);
-      return null;
+
+    /* =============================== VARIATION ================================ */
+    const handled = new WeakSet(); // product cards that already have a badge
+
+    function addTestClass() {
+        document.documentElement.classList.add(CONFIG.testId);
     }
-    const options = { childList: settings.childList, subtree: settings.subtree, attributes: settings.attributes };
-    if (settings.attributes && settings.attributeFilter?.length) options.attributeFilter = settings.attributeFilter;
-    if (!options.childList && !options.attributes) {
-      log('Observer needs childList or attributes set to true');
-      return null;
+
+    function buildBadge() {
+        const badge = document.createElement('span');
+        badge.className = `${CONFIG.testId}-badge`;
+        badge.textContent = CONFIG.copy.badge;
+        return badge;
     }
-    const observer = new MutationObserver((mutations) => {
-      try {
-        callback(mutations);
-      } catch (err) {
-        log('Error in observer', err);
-      }
-    });
-    observer.observe(root, options);
-    log(`Observer started on ${settings.root}`);
-    if (settings.stopAfter > 0) {
-      setTimeout(() => {
-        observer.disconnect();
-        log(`Observer on ${settings.root} stopped after ${settings.stopAfter} ms`);
-      }, settings.stopAfter);
+
+    function addBadges() {
+        document.querySelectorAll(CONFIG.selectors.product).forEach((card) => {
+            if (handled.has(card)) return;
+            handled.add(card);
+            insertAt(buildBadge(), CONFIG.insert.badge, card);
+        });
     }
-    return observer;
-  }
 
-  // Resolves when `selector` exists, rejects after CONFIG.settings.timeout
-  function waitForElement(selector, root = document) {
-    return new Promise((resolve, reject) => {
-      const start = Date.now();
-      (function poll() {
-        const el = root.querySelector(selector);
-        if (el) return resolve(el);
-        if (Date.now() - start >= CONFIG.settings.timeout) return reject(new Error(`Not found: ${selector}`));
-        setTimeout(poll, 50);
-      })();
-    });
-  }
-
-  /* =============================== VARIATION ================================ */
-  const handled = new WeakSet(); // product cards that already have a badge
-
-  function addTestClass() {
-    document.documentElement.classList.add(CONFIG.testId);
-  }
-
-  function buildBadge() {
-    const badge = document.createElement('span');
-    badge.className = `${CONFIG.testId}-badge`;
-    badge.textContent = CONFIG.copy.badge;
-    return badge;
-  }
-
-  function addBadges() {
-    document.querySelectorAll(CONFIG.selectors.product).forEach((card) => {
-      if (handled.has(card)) return;
-      handled.add(card);
-      insertAt(buildBadge(), CONFIG.insert.badge, card);
-    });
-  }
-
-  function init() {
-    try {
-      log('Variation started');
-      addTestClass();
-      addBadges();                                    // cards that exist now
-      observe(CONFIG.observers.products, addBadges);  // cards added later
-    } catch (err) {
-      log('Error', err);
+    function init() {
+        try {
+            log('Variation started');
+            addTestClass();
+            addBadges();                                    // cards that exist now
+            observe(CONFIG.observers.products, addBadges);  // cards added later
+        } catch (err) {
+            log('Error', err);
+        }
     }
-  }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
 })();
 ```
 Leave out helpers you don't use (`observe()` without observers, `waitForElement()` when nothing loads late), but always keep `'use strict'`, `CONFIG`, the debug block, a modular `init()`, the readyState start-up, and `insertAt()` when anything is inserted.
@@ -278,6 +278,7 @@ Leave out helpers you don't use (`observe()` without observers, `waitForElement(
   - `...rest` parameters instead of `arguments`. Only exception: the `gtag()` stub, which GA requires to push the real `arguments` object (see `shared/snippets/tracking/ga4-event-no-pageview.js`).
   - Promises / `async`-`await` instead of nested callbacks, `for...of` / `forEach` instead of index loops when the index isn't needed.
   - No transpiler-only syntax (no TypeScript, no JSX, no `import`/`export`). The code is pasted directly into a testing tool's JS field and must run in the browser as-is.
+- **Indent with 4 spaces**, never tabs or 2 spaces. All snippets and recipes in this repository use 4 spaces.
 - **No global variables.** If something must be shared between runs, use one namespaced property: `window.__hhExp123`.
 - **Follow the mandatory code structure above**: IIFE with `'use strict'`, `CONFIG` first, debug always present, modular `init()` started on `readyState`, insertion via `insertAt()`, observers configured in `CONFIG`.
 - **Add the test class to `<html>`**: `document.documentElement.classList.add(CONFIG.testId)`. Scope CSS that changes existing elements under it, so nothing changes if the JS fails.
@@ -292,6 +293,7 @@ Leave out helpers you don't use (`observe()` without observers, `waitForElement(
 - **Comments**: short comments that explain *why*, especially for selector choices and timing.
 
 ### CSS
+- Indent with 4 spaces, like the JavaScript.
 - Prefix all new classes with the test ID, and scope changes to existing elements under `.hh-exp-123` (the class on `<html>`).
 - Mobile first, or at least check every rule at 375px width. Use the site's breakpoints when known.
 - Avoid `!important`. Use it only to beat inline styles or styles the site sets with `!important`, and say so in a comment.
